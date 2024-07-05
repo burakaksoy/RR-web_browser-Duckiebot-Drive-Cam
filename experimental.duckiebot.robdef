@@ -1,0 +1,10 @@
+#Service to provide sample interface to the Duckiebot Drive
+service experimental.duckiebot
+
+stdver 0.9
+
+object Drive
+
+    function void setWheelsSpeed(double v_left, double v_right)
+
+end object

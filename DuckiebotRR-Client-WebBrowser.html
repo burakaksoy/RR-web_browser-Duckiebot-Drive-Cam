@@ -1,0 +1,83 @@
+
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
+        <script src="https://robotraconteur.github.io/robotraconteur_pyodide/pyodide.js"></script>  
+    </head>
+    <body>
+        
+        <script>
+        
+            function print_div(message)
+            {
+                //$("#print_div").append("<br/>" + message +"\n")
+                $("#print_div").append( message +" ")
+            }
+
+            async function run_test(){
+                await languagePluginLoader;
+                await pyodide.loadPackage(["numpy"]);      
+                const response = await fetch("./DuckiebotRR-Client-Webcam-WebBrowser.py", {cache: "no-store"});
+                
+                const response2 = await fetch("./DuckiebotRR-Client-Drive-WebBrowser.py", {cache: "no-store"}); //ADDED
+                
+                const client_py = await response.text();
+                
+                const client_py2 = await response2.text(); //ADDED
+                
+                pyodide.runPython(client_py)
+                
+                pyodide.runPython(client_py2) //ADDED
+            }
+            run_test()
+        </script>
+
+        <H2>Robot Raconteur Duckiebot Web Browser Demo</H2>
+        
+        <table>
+            <tr style="text-align: center; margin:auto;  display:block">
+                <td> </td>
+                <td>
+                    <canvas id="image" width="320" height="240" style="border:0px solid #000000;"></canvas>
+                </td>
+                <td> </td>            
+            </tr>
+        </table>
+        <table style="text-align: center">
+            <tr>
+                <td> </td>
+                <td>
+                    <button id="drive_btn" type="button">Drive!</button>
+                </td>
+                <td> </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <button id="left_btn" type="button">Turn Left!</button>
+                </td>
+                <td>
+                    <button id="stop_btn" type="button">Stop!</button>
+                </td>
+                <td>
+                    <button id="right_btn" type="button">Turn Right!</button>
+                </td>
+            </tr>
+            
+            <tr>
+                <td> </td>
+                <td>
+                    <button id="drive_back_btn" type="button">Drive Back!</button>
+                </td>
+                <td> </td>
+                
+            </tr>
+                     
+        </table>
+        
+        <div id="print_div"></div>  
+        
+
+    </body>
+</html>
